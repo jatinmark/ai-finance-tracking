@@ -1,11 +1,15 @@
 // utils/getFinancialAdvice.js
-import OpenAI from "openai";
+// import OpenAI from "openai";
+import { GoogleGenAI } from "@google/genai";
+
 
 // Initialize the OpenAI client
-const openai = new OpenAI({
-  apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
-  dangerouslyAllowBrowser: true,
-});
+// const openai = new OpenAI({
+//   apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
+//   dangerouslyAllowBrowser: true,
+// });
+const ai = new GoogleGenAI({ apiKey: "AIzaSyDTBeoL7-_vUywCF7k0QnuiTjpj-GO7034" });
+
 
 // Function to fetch user-specific data (mocked for this example)
 
@@ -22,16 +26,20 @@ const getFinancialAdvice = async (totalBudget, totalIncome, totalSpend) => {
     `;
 
     // Send the prompt to the OpenAI API
-    const chatCompletion = await openai.chat.completions.create({
-      model: "gpt-4",
-      messages: [{ role: "user", content: userPrompt }],
-    });
+    const response = await ai.models.generateContent({
+model: "gemini-2.0-flash",
+contents: userPrompt ,
+});
+    // const chatCompletion = await openai.chat.completions.create({
+    //   model: "gpt-4",
+    //   messages: [{ role: "user", content: userPrompt }],
+    // });
 
     // Process and return the response
-    const advice = chatCompletion.choices[0].message.content;
+    // const advice =  response.text      //chatCompletion.choices[0].message.content;
 
-    console.log(advice);
-    return advice;
+    console.log(response.text);
+    return response.text;
   } catch (error) {
     console.error("Error fetching financial advice:", error);
     return "Sorry, I couldn't fetch the financial advice at this moment. Please try again later.";
