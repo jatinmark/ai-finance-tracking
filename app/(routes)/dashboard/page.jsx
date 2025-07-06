@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { UserButton, useUser } from "@clerk/nextjs";
 import CardInfo from "./_components/CardInfo";
 import { db } from "@/utils/dbConfig";
 import { desc, eq, getTableColumns, sql } from "drizzle-orm";
@@ -9,14 +8,12 @@ import BarChartDashboard from "./_components/BarChartDashboard";
 import BudgetItem from "./budgets/_components/BudgetItem";
 import ExpenseListTable from "./expenses/_components/ExpenseListTable";
 function Dashboard() {
-  const { user } = useUser();
-
   const [budgetList, setBudgetList] = useState([]);
   const [incomeList, setIncomeList] = useState([]);
   const [expensesList, setExpensesList] = useState([]);
   useEffect(() => {
-    user && getBudgetList();
-  }, [user]);
+    getBudgetList();
+  }, []);
   /**
    * used to get budget List
    */
@@ -30,7 +27,8 @@ function Dashboard() {
       })
       .from(Budgets)
       .leftJoin(Expenses, eq(Budgets.id, Expenses.budgetId))
-      .where(eq(Budgets.createdBy, user?.primaryEmailAddress?.emailAddress))
+      // .where(eq(Budgets.createdBy, user?.primaryEmailAddress?.emailAddress))
+      // Filter removed for public access
       .groupBy(Budgets.id)
       .orderBy(desc(Budgets.id));
     setBudgetList(result);
@@ -72,14 +70,15 @@ function Dashboard() {
       })
       .from(Budgets)
       .rightJoin(Expenses, eq(Budgets.id, Expenses.budgetId))
-      .where(eq(Budgets.createdBy, user?.primaryEmailAddress.emailAddress))
+      // .where(eq(Budgets.createdBy, user?.primaryEmailAddress.emailAddress))
+      // Filter removed for public access
       .orderBy(desc(Expenses.id));
     setExpensesList(result);
   };
 
   return (
     <div className="p-8 bg-">
-      <h2 className="font-bold text-4xl">Hi, {user?.fullName} 👋</h2>
+      <h2 className="font-bold text-4xl">Welcome 👋</h2>
       <p className="text-gray-500">
         Here's what happenning with your money, Lets Manage your expense
       </p>
@@ -104,6 +103,7 @@ function Dashboard() {
                 <div
                   className="h-[180xp] w-full
                  bg-slate-200 rounded-lg animate-pulse"
+                  key={index}
                 ></div>
               ))}
         </div>

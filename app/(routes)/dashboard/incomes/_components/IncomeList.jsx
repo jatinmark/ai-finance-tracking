@@ -4,15 +4,13 @@ import CreateIncomes from "./CreateIncomes";
 import { db } from "@/utils/dbConfig";
 import { desc, eq, getTableColumns, sql } from "drizzle-orm";
 import { Incomes, Expenses } from "@/utils/schema";
-import { useUser } from "@clerk/nextjs";
 import IncomeItem from "./IncomeItem";
 
 function IncomeList() {
   const [incomelist, setIncomelist] = useState([]);
-  const { user } = useUser();
   useEffect(() => {
-    user && getIncomelist();
-  }, [user]);
+    getIncomelist();
+  }, []);
 
   const getIncomelist = async () => {
     const result = await db
@@ -23,7 +21,8 @@ function IncomeList() {
       })
       .from(Incomes)
       .leftJoin(Expenses, eq(Incomes.id, Expenses.budgetId))
-      .where(eq(Incomes.createdBy, user?.primaryEmailAddress?.emailAddress))
+      // .where(eq(Incomes.createdBy, user?.primaryEmailAddress?.emailAddress))
+      // Filter removed for public access
       .groupBy(Incomes.id)
       .orderBy(desc(Incomes.id));
     setIncomelist(result);

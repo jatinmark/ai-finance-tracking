@@ -1,4 +1,3 @@
-import { UserButton } from '@clerk/nextjs'
 import React from 'react'
 
 function DashboardHeader() {
@@ -8,7 +7,7 @@ function DashboardHeader() {
           
         </div>
         <div>
-            <UserButton afterSignOutUrl='/'/>
+            {/* User authentication button removed */}
         </div>
        
     </div>

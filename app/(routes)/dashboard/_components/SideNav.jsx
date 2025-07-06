@@ -9,7 +9,6 @@ import {
   TrendingUp,
   TrendingDownIcon,
 } from "lucide-react";
-import { UserButton } from "@clerk/nextjs";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 function SideNav() {
@@ -95,7 +94,7 @@ function SideNav() {
         className="fixed bottom-10 p-5 flex gap-2
             items-center"
       >
-        <UserButton />
+        {/* <UserButton /> */}
         Profile
       </div>
     </div>
