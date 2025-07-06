@@ -59,14 +59,6 @@ npm install
 Create a new file named `.env` in the root of your project and add the following content:
 
 ```env
-NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=p
-CLERK_SECRET_KEY=
-
-NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
-NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
-NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
-NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
-NEXT_PUBLIC_OPENAI_API_KEY=
 
 NEXT_PUBLIC_DATABASE_URL=
 
