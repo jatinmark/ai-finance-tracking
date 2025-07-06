@@ -21,11 +21,14 @@ function IncomeList() {
       })
       .from(Incomes)
       .leftJoin(Expenses, eq(Incomes.id, Expenses.budgetId))
-      // .where(eq(Incomes.createdBy, user?.primaryEmailAddress?.emailAddress))
-      // Filter removed for public access
       .groupBy(Incomes.id)
       .orderBy(desc(Incomes.id));
     setIncomelist(result);
+  };
+
+  const deleteIncome = async (id) => {
+    await db.delete(Incomes).where(eq(Incomes.id, id));
+    getIncomelist();
   };
 
   return (
@@ -37,7 +40,7 @@ function IncomeList() {
         <CreateIncomes refreshData={() => getIncomelist()} />
         {incomelist?.length > 0
           ? incomelist.map((budget, index) => (
-              <IncomeItem budget={budget} key={index} />
+              <IncomeItem budget={budget} key={index} onDelete={deleteIncome} />
             ))
           : [1, 2, 3, 4, 5].map((item, index) => (
               <div

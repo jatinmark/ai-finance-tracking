@@ -16,9 +16,6 @@ function Header() {
             Dashboard
           </Button>
         </Link>
-        <Link href={"/sign-in"}>
-          <Button className="rounded-full">Get Started</Button>
-        </Link>
       </div>
     </div>
   );

@@ -23,8 +23,6 @@ function BudgetList() {
       totalItem: sql `count(${Expenses.id})`.mapWith(Number)
     }).from(Budgets)
     .leftJoin(Expenses,eq(Budgets.id,Expenses.budgetId))
-    // .where(eq(Budgets.createdBy,user?.primaryEmailAddress?.emailAddress))
-    // Filter removed for public access
     .groupBy(Budgets.id)
     .orderBy(desc(Budgets.id))
     ;
