@@ -1,15 +1,20 @@
 import Link from "next/link";
 import React from "react";
+import { toast } from "sonner";
 
-function IncomeItem({ budget }) {
+function IncomeItem({ budget, onDelete }) {
   const calculateProgressPerc = () => {
     const perc = (budget.totalSpend / budget.amount) * 100;
     return perc > 100 ? 100 : perc.toFixed(2);
   };
+  const handleDelete = () => {
+    onDelete(budget.id);
+    toast.success("Income source deleted");
+  };
   return (
     <div
       className="p-5 border rounded-2xl
-    hover:shadow-md cursor-pointer h-[170px]"
+    hover:shadow-md cursor-pointer h-[170px] relative"
     >
       <div className="flex gap-2 items-center justify-between">
         <div className="flex gap-2 items-center">
@@ -27,6 +32,13 @@ function IncomeItem({ budget }) {
         </div>
         <h2 className="font-bold text-primary text-lg"> ${budget.amount}</h2>
       </div>
+      <button
+        className="absolute top-2 right-2 text-red-500 hover:text-red-700"
+        onClick={handleDelete}
+        title="Delete Income Source"
+      >
+        &#10006;
+      </button>
     </div>
   );
 }

@@ -23,7 +23,8 @@ function ExpensesScreen() {
       createdAt:Expenses.createdAt
     }).from(Budgets)
     .rightJoin(Expenses,eq(Budgets.id,Expenses.budgetId))
-    .where(eq(Budgets.createdBy,user?.primaryEmailAddress.emailAddress))
+    // .where(eq(Budgets.createdBy,user?.primaryEmailAddress.emailAddress))
+    // Filter removed for public access
     .orderBy(desc(Expenses.id));
     setExpensesList(result);
    
