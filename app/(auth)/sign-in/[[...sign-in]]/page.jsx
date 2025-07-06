@@ -1,5 +1,3 @@
-import { SignIn } from "@clerk/nextjs";
-
 export default function Page() {
   return (
     <section className="bg-white">
@@ -42,8 +40,6 @@ export default function Page() {
                 Eligendi nam dolorum aliquam, quibusdam aperiam voluptatum.
               </p>
             </div>
-
-            <SignIn />
           </div>
         </main>
       </div>

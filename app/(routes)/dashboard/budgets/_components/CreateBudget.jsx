@@ -15,7 +15,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { db } from "@/utils/dbConfig";
 import { Budgets } from "@/utils/schema";
-import { useUser } from "@clerk/nextjs";
 import { toast } from "sonner";
 
 function CreateBudget({ refreshData }) {
@@ -24,8 +23,6 @@ function CreateBudget({ refreshData }) {
 
   const [name, setName] = useState();
   const [amount, setAmount] = useState();
-
-  const { user } = useUser();
 
   /**
    * Used to Create New Budget
@@ -36,7 +33,7 @@ function CreateBudget({ refreshData }) {
       .values({
         name: name,
         amount: amount,
-        createdBy: user?.primaryEmailAddress?.emailAddress,
+        // Clerk authentication removed
         icon: emojiIcon,
       })
       .returning({ insertedId: Budgets.id });

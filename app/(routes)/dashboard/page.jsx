@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { UserButton, useUser } from "@clerk/nextjs";
 import CardInfo from "./_components/CardInfo";
 import { db } from "@/utils/dbConfig";
 import { desc, eq, getTableColumns, sql } from "drizzle-orm";
@@ -9,14 +8,12 @@ import BarChartDashboard from "./_components/BarChartDashboard";
 import BudgetItem from "./budgets/_components/BudgetItem";
 import ExpenseListTable from "./expenses/_components/ExpenseListTable";
 function Dashboard() {
-  const { user } = useUser();
-
   const [budgetList, setBudgetList] = useState([]);
   const [incomeList, setIncomeList] = useState([]);
   const [expensesList, setExpensesList] = useState([]);
   useEffect(() => {
-    user && getBudgetList();
-  }, [user]);
+    getBudgetList();
+  }, []);
   /**
    * used to get budget List
    */
@@ -30,7 +27,8 @@ function Dashboard() {
       })
       .from(Budgets)
       .leftJoin(Expenses, eq(Budgets.id, Expenses.budgetId))
-      .where(eq(Budgets.createdBy, user?.primaryEmailAddress?.emailAddress))
+      // .where(eq(Budgets.createdBy, user?.primaryEmailAddress?.emailAddress))
+      // Filter removed for public access
       .groupBy(Budgets.id)
       .orderBy(desc(Budgets.id));
     setBudgetList(result);

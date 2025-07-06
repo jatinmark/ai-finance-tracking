@@ -1,7 +1,6 @@
 "use client";
 import { db } from "@/utils/dbConfig";
 import { Budgets, Expenses } from "@/utils/schema";
-import { useUser } from "@clerk/nextjs";
 import { desc, eq, getTableColumns, sql } from "drizzle-orm";
 import React, { useEffect, useState } from "react";
 import BudgetItem from "../../budgets/_components/BudgetItem";
@@ -25,13 +24,12 @@ import { useRouter } from "next/navigation";
 import EditBudget from "../_components/EditBudget";
 
 function ExpensesScreen({ params }) {
-  const { user } = useUser();
   const [budgetInfo, setbudgetInfo] = useState();
   const [expensesList, setExpensesList] = useState([]);
   const route = useRouter();
   useEffect(() => {
-    user && getBudgetInfo();
-  }, [user]);
+    getBudgetInfo();
+  }, []);
 
   /**
    * Get Budget Information
@@ -45,7 +43,6 @@ function ExpensesScreen({ params }) {
       })
       .from(Budgets)
       .leftJoin(Expenses, eq(Budgets.id, Expenses.budgetId))
-      .where(eq(Budgets.createdBy, user?.primaryEmailAddress?.emailAddress))
       .where(eq(Budgets.id, params.id))
       .groupBy(Budgets.id);
 
@@ -137,7 +134,6 @@ function ExpensesScreen({ params }) {
         )}
         <AddExpense
           budgetId={params.id}
-          user={user}
           refreshData={() => getBudgetInfo()}
         />
       </div>

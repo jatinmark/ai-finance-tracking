@@ -4,16 +4,14 @@ import { Budgets, Expenses } from '@/utils/schema';
 import { desc, eq } from 'drizzle-orm';
 import React, { useEffect, useState } from 'react'
 import ExpenseListTable from './_components/ExpenseListTable';
-import { useUser } from '@clerk/nextjs';
 
 function ExpensesScreen() {
 
   const [expensesList,setExpensesList]=useState([]);
-    const {user}=useUser();
 
     useEffect(()=>{
-        user&&getAllExpenses();
-      },[user])
+        getAllExpenses();
+      },[])
     /**
    * Used to get All expenses belong to users
    */
