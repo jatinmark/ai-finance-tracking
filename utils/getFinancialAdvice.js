@@ -8,7 +8,7 @@ import { GoogleGenAI } from "@google/genai";
 //   apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
 //   dangerouslyAllowBrowser: true,
 // });
-const ai = new GoogleGenAI({ apiKey: "AIzaSyDTBeoL7-_vUywCF7k0QnuiTjpj-GO7034" });
+const ai = new GoogleGenAI({ apiKey: "AIzaSyDGDwx5gmQBXP9sTLm2sXGrKtU3b525kZM" });
 
 
 // Function to fetch user-specific data (mocked for this example)
